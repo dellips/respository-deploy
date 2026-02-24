@@ -22,6 +22,10 @@ app.get('/say/:greeting', (req, res) => {
     res.send(greeting);
 });
 
+app.get('/home', (req, res) => {
+    res.send('Welcome to cisato!');
+})
+
 // error handling middleware
 app.use((err, req, res, next) => {
     res.send('Error Occurred');
