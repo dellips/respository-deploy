@@ -26,6 +26,13 @@ app.get('/home', (req, res) => {
     res.send('Welcome to cisato!');
 })
 
+app.get('/tryError', (req, res) => {
+    return res.status(401).json({
+        status: 401,
+        message: "Error Unauthorized 401"
+    });
+})
+
 // error handling middleware
 app.use((err, req, res, next) => {
     res.send('Error Occurred');
