@@ -1,10 +1,16 @@
 import express from 'express';
 import noteRouter from './routes/notes.js';
 import mongoose from 'mongoose';
+import cors from "cors";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+
+app.use(cors({
+  origin: "*"
+}));
 
 // middleware
 app.use((req, res, next) => {
