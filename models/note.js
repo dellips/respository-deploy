@@ -12,7 +12,7 @@ export const get = (id) => {
         (note) => note.id === id
     );
     if(!note){
-        throw new Erroe('Note not found');
+        throw new Error('Note not found');
     }
     return note;
 }
