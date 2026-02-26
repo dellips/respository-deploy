@@ -1,6 +1,10 @@
 import express from 'express';
+import noteRouter from './routes/notes.js';
+import mongoose from 'mongoose';
 
 const app = express();
+
+app.use(express.json());
 
 // middleware
 app.use((req, res, next) => {
@@ -11,6 +15,8 @@ app.use((req, res, next) => {
     }
     next();
 });
+
+app.use('/notes', noteRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello Delli! ^^');
@@ -35,4 +41,26 @@ app.use((err, req, res, next) => {
     res.send('Error Occurred');
 });
 
-app.listen(3000);
+app.use((req, res, next) => {
+    res.status(404).send(`Page not found ${req.path}`);
+    // res.send({
+    //     result: 'fail',
+    //     error: `Page not found ${req.path}`
+    // });
+});
+
+app.use((err, req, res, next) => {
+    res.status(500).send(err.message);
+    // res.json({
+    //     result: 'fail',
+    //     error: err.message,
+    // });
+});
+
+mongoose.connect('mongodb+srv://dellianasalsabilap3_db_user:95PkR3NKDV2IqnPz@cluster0.2ale6mf.mongodb.net/?appName=Cluster0')
+    .then(() => console.log('Koneksi database berhasil tersambung.'))
+    .catch((err) => console.error('Koneksi gagal:', err));
+
+app.listen(3000, () => {
+    console.log('Server berjalan di http://localhost:3000');
+});
