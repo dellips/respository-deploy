@@ -31,12 +31,13 @@ router.get('/:id', async (req, res, next) => {
 
 // create
 router.post('/', async (req, res) => {
-    const { title, content } = req.body;
+    const { title, content, author } = req.body;
     try {
         // const note = Note.create(title, content);
         const note = await Post.create({
             title,
             content,
+            author,
         });
         res.status(201).json(note);
     } catch (e) {
@@ -48,11 +49,12 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res, next) => {
     // const id = Number(req.params.id);
     const id = req.params.id;
-    const { title, content } = req.body;
+    const { title, content, author } = req.body;
     try {
         const note = await Post.findByIdAndUpdate(id, {
             title,
             content,
+            author,
         }, { returnDocument: 'after' });
 
         if (!note) {
